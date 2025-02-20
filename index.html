@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sort Without Articles</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: url("https://images.unsplash.com/photo-1623902114760-303629cfab55?q=80&w=689&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      #bands {
+        list-style: inside square;
+        font-size: 20px;
+        background: white;
+        width: 500px;
+        margin: auto;
+        padding: 0;
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+      }
+
+      #bands li {
+        border-bottom: 1px solid #efefef;
+        padding: 20px;
+      }
+
+      #bands li:last-child {
+        border-bottom: 0;
+      }
+
+      a {
+        color: #ffc600;
+        text-decoration: none;
+      }
+    </style>
+
+    <ul id="bands"></ul>
+
+    <script>
+      const bands = [
+        "The Plot in You",
+        "The Devil Wears Prada",
+        "Pierce the Veil",
+        "Norma Jean",
+        "The Bled",
+        "Say Anything",
+        "The Midway State",
+        "We Came as Romans",
+        "Counterparts",
+        "Oh, Sleeper",
+        "A Skylit Drive",
+        "Anywhere But Here",
+        "An Old Dog",
+      ];
+
+      // This function removes leading articles ("The", "A", or "An") from a band name.
+      function strip(bandName) {
+        return bandName.replace(/^(the |a |an )/i, "").trim();
+        // Uses regular expressions (/^(the |a |an )/i):
+        // ^ → Matches the beginning of the string.
+        // (the |a |an ) → Looks for "The", "A", or "An" followed by a space.
+        // /i → Case-insensitive, so it matches "the", "THE", "tHe", etc.
+        // .replace() → replace the first expression with the second one (nothing).
+        // .trim() → Ensures there are no extra spaces left.
+      }
+
+      const sortedBands = bands.sort((a, b) => (strip(a) > strip(b) ? 1 : -1));
+      console.log(sortedBands);
+      // [ "Anywhere But Here", "The Bled", "Counterparts", "The Devil Wears Prada", "The Midway State", "Norma Jean", "Oh, Sleeper", "An Old Dog", "Pierce the Veil", "The Plot in You", … ]
+
+      const ul = document.querySelector("#bands");
+      // Loops through each item in sortedBands and Create and Insert the <li> Elements
+      ul.innerHTML = sortedBands
+        .map(
+          (band) =>
+            `
+          <li>${band}</li>
+        `
+        )
+        .join("");
+      // .join("") → Converts the array into a single string:
+      // Original Array: ["<li>Anywhere But Here</li>", "<li>The Bled</li>", "<li>Counterparts</li>", "<li>A Skylit Drive</li>"]
+      // Single String: "<li>Anywhere But Here</li><li>The Bled</li><li>Counterparts</li><li>A Skylit Drive</li>"
+    </script>
+  </body>
+</html>
