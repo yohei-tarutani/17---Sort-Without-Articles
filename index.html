@@ -17,7 +17,15 @@
         min-height: 100vh;
       }
 
-      #bands {
+      .flex-div {
+        display: flex;
+        gap: 8rem;
+        align-items: center;
+        margin: auto;
+      }
+
+      #bands,
+      #sortedBands {
         list-style: inside square;
         font-size: 20px;
         background: white;
@@ -27,12 +35,14 @@
         box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
       }
 
-      #bands li {
+      #bands li,
+      #sortedBands li {
         border-bottom: 1px solid #efefef;
         padding: 20px;
       }
 
-      #bands li:last-child {
+      #bands li:last-child,
+      #sortedBands li:last-child {
         border-bottom: 0;
       }
 
@@ -42,7 +52,16 @@
       }
     </style>
 
-    <ul id="bands"></ul>
+    <div class="flex-div">
+      <div>
+        <h3>Original Bands</h3>
+        <ul id="bands"></ul>
+      </div>
+      <div>
+        <h3>Sorted Bands (Sort without articles - the, a, an)</h3>
+        <ul id="sortedBands"></ul>
+      </div>
+    </div>
 
     <script>
       const bands = [
@@ -61,6 +80,8 @@
         "An Old Dog",
       ];
 
+      const copiedBands = [...bands];
+
       // This function removes leading articles ("The", "A", or "An") from a band name.
       function strip(bandName) {
         return bandName.replace(/^(the |a |an )/i, "").trim();
@@ -72,13 +93,16 @@
         // .trim() → Ensures there are no extra spaces left.
       }
 
-      const sortedBands = bands.sort((a, b) => (strip(a) > strip(b) ? 1 : -1));
+      const sortedBands = copiedBands.sort((a, b) =>
+        strip(a) > strip(b) ? 1 : -1
+      );
+      console.log(bands);
       console.log(sortedBands);
       // [ "Anywhere But Here", "The Bled", "Counterparts", "The Devil Wears Prada", "The Midway State", "Norma Jean", "Oh, Sleeper", "An Old Dog", "Pierce the Veil", "The Plot in You", … ]
 
       const ul = document.querySelector("#bands");
       // Loops through each item in sortedBands and Create and Insert the <li> Elements
-      ul.innerHTML = sortedBands
+      ul.innerHTML = bands
         .map(
           (band) =>
             `
@@ -89,6 +113,16 @@
       // .join("") → Converts the array into a single string:
       // Original Array: ["<li>Anywhere But Here</li>", "<li>The Bled</li>", "<li>Counterparts</li>", "<li>A Skylit Drive</li>"]
       // Single String: "<li>Anywhere But Here</li><li>The Bled</li><li>Counterparts</li><li>A Skylit Drive</li>"
+
+      const ul2 = document.querySelector("#sortedBands");
+      ul2.innerHTML = sortedBands
+        .map(
+          (band) =>
+            `
+          <li>${band}</li>
+        `
+        )
+        .join("");
     </script>
   </body>
 </html>
